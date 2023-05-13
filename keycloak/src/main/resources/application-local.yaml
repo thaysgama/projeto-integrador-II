@@ -1,0 +1,31 @@
+port: 8082
+mysql:
+  database: dh-financial
+  port: 3306
+  host: localhost
+  username: root
+  password: password
+
+keycloak:
+  host: http://localhost:8082
+  realm: dh-financial
+  client_id: dh-financial
+  client_secret: 4nfnOyCJV5JSdIHgbXKZYwSTSXu6MFVy
+  redirect_uri: http://localhost:8080
+
+spring:
+  port: 8082
+  application:
+    name: dh-financial-keycloak
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+    discovery:
+      client:
+        simple:
+          enabled: true
+          instances:
+            dh-financial-keycloak:
+              - uri: http://localhost:8082

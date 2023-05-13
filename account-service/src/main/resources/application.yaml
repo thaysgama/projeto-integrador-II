@@ -1,0 +1,31 @@
+server:
+  port: 8083
+mysql:
+  database: account_database
+  port: 3306
+  host: localhost
+  username: root
+  password: password
+
+spring:
+  application:
+    name: account-service
+  datasource:
+    username: root
+    password: password
+    url: jdbc:mysql://db:3306/accounts_database?createDatabaseIfNotExist=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher

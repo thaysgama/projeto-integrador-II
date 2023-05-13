@@ -1,0 +1,53 @@
+server:
+  port: 8083
+mysql:
+  database: account_database
+  port: 3306
+  host: localhost
+  username: root
+  password: password
+
+keycloak:
+  host: http://localhost:8082
+  realm: dh-financial
+  client_id: dh-financial
+  client_secret: hQsGX9jfogh7TROStKjuDvSnqM1lrnuW
+  redirect_uri: http://localhost:8080
+
+spring:
+  application:
+    name: account-service
+  datasource:
+    username: root
+    password: password
+    url: jdbc:mysql://localhost:3306/accounts_database?createDatabaseIfNotExist=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+      ddl-auto: create-drop
+      defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+    discovery:
+      client:
+        simple:
+          enabled: true
+          instances:
+            account-service:
+              - uri: http://localhost:8082
+    eureka:
+      client:
+        serviceUrl:
+          defaultZone: http://localhost:8761/eureka/
